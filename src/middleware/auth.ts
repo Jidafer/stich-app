@@ -7,7 +7,7 @@ export const authMiddleware = (req: any, res: Response, next: NextFunction) => {
 
     try {
         const decoded = jwt.verify(token, "Elite_barbarians69");
-        req.user = decoded;
+        req.user = decoded;6
         next();
     } catch (e) {
         res.status(401).json({ error: "Неверный токен" });

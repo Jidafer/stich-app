@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -23,13 +22,12 @@ model User {
   posts    Post[]
 }
 
-model Post {
-  id      Int     @id @default(autoincrement())
-  title   String
-  content String?
-
-  // Поле для хранения ID автора
-  authorId Int
-яли User
-  author   User @relation(fields: [authorId], references: [id])
-}
+    model Post {
+      id        Int      @id @default(autoincrement())
+      title     String
+      content   String?
+      createdAt DateTime @default(now()) 
+      authorId  Int
+      author    User     @relation(fields: [authorId], references: [id])
+    }
+    
