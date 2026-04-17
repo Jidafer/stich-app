@@ -111,7 +111,7 @@
     }
 
     socketRef.current.emit('chat:join', { room: 'main', nickname: username }, (ack) => {
-        console.log("Ответ от сервера получен:", ack); // Добавь это для проверки
+        console.log("Ответ от сервера получен:", ack);
         if (ack.ok) {
             setIsJoined(true);
         } else {
