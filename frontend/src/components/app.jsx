@@ -5,8 +5,6 @@
     // --- Настройки чата ---
     const SOCKET_SERVER_URL = 'http://localhost:5000'; 
     // --- ---
-
-    // Импортируем хук для работы с чатом (путь исправлен)
      import { useChatSocket } from '../chat/useChatSocket';
 
     const App = () => {
@@ -20,9 +18,6 @@
 
         // Подключение к Socket.io
         const socketRef = useRef();
-
-        // ❗️ ВЫЗЫВАЕМ ХУК useChatSocket ПРЯМО ЗДЕСЬ, а не в useEffect
-        // Передаем в него socketRef.current, чтобы он мог им пользоваться
         useChatSocket(socketRef.current, username, chatMessage, setChatMessages);
 
         useEffect(() => {
@@ -48,10 +43,9 @@
             return () => {
                 socket.disconnect();
             };
-        }, []); // ❗️ ВАЖНО: Добавляем пустой массив зависимостей, чтобы useEffect вызвался один раз
+        }, []);
 
-
-        // --- Функции для постов (твой существующий код) ---
+        // --- Функции для постов
         const fetchPosts = async () => {
             try {
                 const { data } = await api.get('/posts');
@@ -63,7 +57,7 @@
 
         useEffect(() => {
             fetchPosts();
-        }, []); // ❗️ ВАЖНО: Добавляем пустой массив зависимостей здесь тоже
+        }, []);
                 const createPost = async () => {
             try {
                 await api.post('/posts', newPost);
