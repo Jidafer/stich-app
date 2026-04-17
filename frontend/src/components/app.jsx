@@ -10,6 +10,7 @@
      import { useChatSocket } from '../chat/useChatSocket';
 
     const App = () => {
+        const [isJoined, setIsJoined] = useState(false); // Новый флаг: вошел ли пользователь в чат
         const [posts, setPosts] = useState([]);
         const [newPost, setNewPost] = useState({ title: '', content: '' });
         const [editingId, setEditingId] = useState(null);
@@ -102,19 +103,29 @@
         };
 
         // --- Функции для чата ---
-        const handleJoinChat = () => {
-            if (!username.trim()) {
-                alert("Пожалуйста, введите ваше имя для чата.");
-                return;
-            }
-            socketRef.current.emit('chat:join', { room: 'main', nickname: username }, (ack) => {
-                if (ack.ok) {
-                    console.log('Успешно вошли в чат!');
-                } else {
-                    alert(`Ошибка входа в чат: ${ack.error}`);
-                }
-            });
-        };
+       const handleJoinChat = () => {
+    console.log("Нажата кнопка войти. Имя:", username); // Добавь эту строку для проверки
+
+    if (!username.trim()) {
+        alert("Пожалуйста, введите ваше имя для чата.");
+        return;
+    }
+
+    if (!socketRef.current) {
+        console.error("Сокет не подключен!");
+        return;
+    }
+
+    socketRef.current.emit('chat:join', { room: 'main', nickname: username }, (ack) => {
+        console.log("Ответ от сервера получен:", ack); // Добавь это для проверки
+        if (ack.ok) {
+            setIsJoined(true);
+        } else {
+            alert(`Ошибка входа в чат: ${ack.error}`);
+        }
+    });
+};
+
 
         const handleSendMessage = () => {
             if (chatMessage.trim() && socketRef.current) {
@@ -188,7 +199,7 @@
                     <h3>Чат с поддержкой</h3>
                     
                     {/* Ввод имени пользователя */}
-                    {!username ? (
+                    {!isJoined ? (
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
                             <input 
                                 type="text" 

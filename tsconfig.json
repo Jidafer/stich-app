@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -13,18 +12,3 @@
     },
   "exclude": ["frontend", "node_modules"]
 }
-=======
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
-  }
-}
->>>>>>> 8212f060fd183a637a6e95bb4e40839b70ae68fd
